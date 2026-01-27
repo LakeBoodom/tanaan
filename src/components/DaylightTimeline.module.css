@@ -1,0 +1,74 @@
+/* ════════════════════════════════════
+   DAYLIGHT TIMELINE — 24h visualization
+   ════════════════════════════════════ */
+
+.timeline {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 24px;
+  border-radius: 0;
+  overflow: hidden;
+  margin-top: var(--spacing-md);
+}
+
+/* ════════════════════════════════════
+   DAY & NIGHT SEGMENTS
+   ════════════════════════════════════ */
+
+.night {
+  background: linear-gradient(
+    to right,
+    #4a5f78,
+    #5a6f88
+  );
+  height: 100%;
+}
+
+.day {
+  background: linear-gradient(
+    to right,
+    #fef9f3,
+    #f5e6d3,
+    #fef9f3
+  );
+  height: 100%;
+}
+
+/* ════════════════════════════════════
+   HOUR MARKERS
+   ════════════════════════════════════ */
+
+.markers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.marker:first-child,
+.marker:last-child {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.markerLabel {
+  position: absolute;
+  bottom: -24px;
+  font-size: 0.75rem;
+  color: var(--color-text-lighter);
+  font-weight: 400;
+  transform: translateX(-50%);
+}

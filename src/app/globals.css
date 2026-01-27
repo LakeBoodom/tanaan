@@ -1,0 +1,117 @@
+/* ════════════════════════════════════
+   GLOBAL STYLES — Editorial Calm
+   ════════════════════════════════════ */
+
+:root {
+  /* Typography */
+  --font-serif: var(--font-lora), Georgia, serif;
+  --font-sans: var(--font-work-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Color palette — soft, muted, editorial */
+  --color-bg: #fafaf8;
+  --color-text: #2a2a2a;
+  --color-text-light: #6a6a6a;
+  --color-text-lighter: #9a9a9a;
+  
+  --color-night: #3d5875;
+  --color-day: #f5e6d3;
+  
+  --color-border: #e5e5e0;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  
+  /* Layout */
+  --max-width: 680px;
+  --section-spacing: 3rem;
+}
+
+/* ════════════════════════════════════
+   RESET & BASE
+   ════════════════════════════════════ */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* ════════════════════════════════════
+   TYPOGRAPHY
+   ════════════════════════════════════ */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  color: var(--color-text-light);
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ════════════════════════════════════
+   MOBILE FIRST RESPONSIVE
+   ════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  :root {
+    --section-spacing: 3rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ════════════════════════════════════
+   ACCESSIBILITY
+   ════════════════════════════════════ */
+
+*:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+button {
+  cursor: pointer;
+}

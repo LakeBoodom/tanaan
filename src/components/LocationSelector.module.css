@@ -1,0 +1,92 @@
+/* ════════════════════════════════════
+   LOCATION SELECTOR — Bottom of page
+   ════════════════════════════════════ */
+
+.container {
+  padding-top: 0;
+  border-top: none;
+  margin-top: var(--spacing-md);
+}
+
+.label {
+  display: none;
+}
+
+/* ════════════════════════════════════
+   SELECTOR INPUT
+   ════════════════════════════════════ */
+
+.selector {
+  position: relative;
+}
+
+.input {
+  width: auto;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.input:hover {
+  opacity: 0.6;
+}
+
+.input:focus {
+  outline: none;
+  opacity: 0.7;
+}
+
+.input::placeholder {
+  color: var(--color-text-lighter);
+}
+
+/* ════════════════════════════════════
+   DROPDOWN
+   ════════════════════════════════════ */
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.option {
+  width: 100%;
+  padding: var(--spacing-sm);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.option:focus {
+  outline: none;
+  background: rgba(0, 0, 0, 0.05);
+}

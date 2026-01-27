@@ -1,0 +1,263 @@
+/* ════════════════════════════════════
+   MAIN PAGE LAYOUT
+   ════════════════════════════════════ */
+
+.main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-md);
+}
+
+/* ════════════════════════════════════
+   SECTIONS — Generous vertical rhythm
+   ════════════════════════════════════ */
+
+.moodSection,
+.dateSection,
+.sunSection,
+.weatherSection,
+.namedaysSection,
+.historySection,
+.locationSection {
+  margin-bottom: var(--section-spacing);
+}
+
+/* ════════════════════════════════════
+   MOOD LINE
+   ════════════════════════════════════ */
+
+.moodSection {
+  margin-left: calc(var(--spacing-md) * -1);
+  margin-right: calc(var(--spacing-md) * -1);
+  margin-top: calc(var(--spacing-2xl) * -1);
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-radius: 0;
+}
+
+.moodText {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════
+   DATE
+   ════════════════════════════════════ */
+
+.dateSection {
+  margin-bottom: var(--spacing-lg);
+}
+
+.date {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+/* ════════════════════════════════════
+   SECTION TITLES
+   ════════════════════════════════════ */
+
+.sectionTitle {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  color: var(--color-text-lighter);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ════════════════════════════════════
+   SUN & DAYLIGHT
+   ════════════════════════════════════ */
+
+.sunTimes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.sunTime {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sunLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-lighter);
+  font-weight: 400;
+}
+
+.sunValue {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: 0;
+}
+
+/* ════════════════════════════════════
+   WEATHER
+   ════════════════════════════════════ */
+
+.weatherContent {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.weatherIcon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-text-light);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.weatherDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.weatherDescription {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.weatherTemp {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: 0;
+}
+
+.weatherWind {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weatherWindIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+}
+
+/* Time of day indicators */
+.weatherTimes {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+.weatherTime {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-lighter);
+}
+
+.weatherTimeIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+}
+
+/* ════════════════════════════════════
+   NAME DAYS
+   ════════════════════════════════════ */
+
+.namedaysList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.nameday {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.namedayLabel {
+  font-size: 0.875rem;
+  color: var(--color-text-lighter);
+  font-weight: 400;
+}
+
+.namedayValue {
+  font-size: 1rem;
+  color: var(--color-text);
+  font-weight: 400;
+  text-align: right;
+}
+
+/* ════════════════════════════════════
+   HISTORY
+   ════════════════════════════════════ */
+
+.historyText {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  font-weight: 300;
+  max-width: 580px;
+}
+
+/* ════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .main {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .moodSection {
+    padding: var(--spacing-md);
+  }
+  
+  .date {
+    font-size: 1.75rem;
+  }
+  
+  .sunTimes {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .sunValue {
+    font-size: 1.125rem;
+  }
+  
+  .weatherTemp {
+    font-size: 1.25rem;
+  }
+  
+  .historyText {
+    font-size: 0.9375rem;
+  }
+}
