@@ -52,6 +52,7 @@ Format: "Tänä päivänä vuonna YYYY …"
 
 ## Tech Stack
 
+
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: CSS Modules
