@@ -4,7 +4,10 @@ import { fetchDayData } from '@/utils/openMeteo';
 import { fetchHistoricalEvent } from '@/utils/wikipedia';
 import { getCurrentHelsinkiDate } from '@/utils/dateTime';
 import municipalities from '@/data/municipalities.json';
-
+```typescript
+// Force dynamic rendering - always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 /**
  * Main server component
  * Fetches data and passes to client component
