@@ -1,3 +1,5 @@
+/ Updated for auto-refresh
+import { Suspense } from 'react';
 import { Suspense } from 'react';
 import TanaanClient from './TanaanClient';
 import { fetchDayData } from '@/utils/openMeteo';
