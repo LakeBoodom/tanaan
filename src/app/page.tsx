@@ -1,38 +1,252 @@
-/ Updated for auto-refresh
-import { Suspense } from 'react';
-import { Suspense } from 'react';
-import TanaanClient from './TanaanClient';
-import { fetchDayData } from '@/utils/openMeteo';
-import { fetchHistoricalEvent } from '@/utils/wikipedia';
-import { getCurrentHelsinkiDate } from '@/utils/dateTime';
-import municipalities from '@/data/municipalities.json';
-// Force dynamic rendering - always fetch fresh data
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-/**
- * Main server component
- * Fetches data and passes to client component
- */
-export default async function Home() {
-  const date = getCurrentHelsinkiDate();
-  
-  // Default location: Helsinki
-  const defaultLocation = municipalities[0];
-  
-  // Fetch data in parallel
-  const [dayData, historicalEvent] = await Promise.all([
-    fetchDayData(defaultLocation.lat, defaultLocation.lon, date),
-    fetchHistoricalEvent(date),
+'use client';
+
+import { useMemo, useState } from 'react';
+
+type MemeItem = {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+  trending?: boolean;
+  likes?: number;
+  views?: number;
+  age?: string;
+};
+
+type Layer = {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+};
+
+const categories = ['Suosituimmat', 'Reaktiot', 'Suomi', 'Urheilu', 'Työelämä', 'Blank'];
+
+const templates: MemeItem[] = [
+  { id: 'drake', title: 'Drake', category: 'Suosituimmat', image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80', trending: true },
+  { id: 'boyfriend', title: 'Distracted Boyfriend', category: 'Reaktiot', image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80' },
+  { id: 'cat', title: 'Woman Yelling at Cat', category: 'Reaktiot', image: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80' },
+  { id: 'handshake', title: 'Epic Handshake', category: 'Työelämä', image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80', trending: true },
+  { id: 'disaster', title: 'Disaster Girl', category: 'Suosituimmat', image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=900&q=80' },
+  { id: 'changemind', title: 'Change My Mind', category: 'Työelämä', image: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=900&q=80' },
+  { id: 'torille', title: 'Torille', category: 'Suomi', image: 'https://images.unsplash.com/photo-1526481280695-3c4699d2eac6?auto=format&fit=crop&w=900&q=80' },
+  { id: 'suomireaktio', title: 'Suomi-reaktio', category: 'Suomi', image: 'https://images.unsplash.com/photo-1513279922550-250c2129b13a?auto=format&fit=crop&w=900&q=80' },
+];
+
+const latest: MemeItem[] = templates.map((m, i) => ({ ...m, id: `latest-${m.id}`, likes: 40 + i * 9, views: 600 + i * 189, age: `${i + 1} h sitten` }));
+
+export default function Page() {
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('Suosituimmat');
+  const [selectedTemplate, setSelectedTemplate] = useState<MemeItem>(templates[0]);
+  const [layers, setLayers] = useState<Layer[]>([
+    { id: 'top', text: 'KUN KAHVI OSUU HETI', x: 50, y: 8 },
+    { id: 'bottom', text: 'JA DEADLINE EI ENÄÄ PELOTA', x: 50, y: 82 },
   ]);
-  
+  const [selectedLayer, setSelectedLayer] = useState('top');
+  const [fontFamily, setFontFamily] = useState('Impact');
+  const [fontSize, setFontSize] = useState(46);
+  const [textColor, setTextColor] = useState('#ffffff');
+  const [strokeColor, setStrokeColor] = useState('#000000');
+  const [strokeSize, setStrokeSize] = useState(2);
+  const [bold, setBold] = useState(true);
+  const [caps, setCaps] = useState(true);
+  const [align, setAlign] = useState<'left' | 'center' | 'right'>('center');
+  const [toast, setToast] = useState('');
+
+  const filtered = useMemo(() => templates.filter((t) => (category === 'Suosituimmat' || t.category === category) && t.title.toLowerCase().includes(search.toLowerCase())), [search, category]);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 2200);
+  };
+
+  const updateLayer = (id: string, patch: Partial<Layer>) => {
+    setLayers((prev) => prev.map((l) => (l.id === id ? { ...l, ...patch } : l)));
+  };
+
+  const placeLayer = (mode: 'Ylös' | 'Keskelle' | 'Alas' | 'Vapaa') => {
+    if (mode === 'Vapaa') return;
+    const y = mode === 'Ylös' ? 8 : mode === 'Keskelle' ? 48 : 84;
+    updateLayer(selectedLayer, { y });
+  };
+
   return (
-    <Suspense fallback={null}>
-      <TanaanClient 
-        initialDayData={dayData}
-        initialHistoricalEvent={historicalEvent}
-        initialLocation={defaultLocation}
-        currentDate={date}
-      />
-    </Suspense>
+    <main>
+      <header className="topbar">
+        <div className="container nav">
+          <div className="logo"><span className="logo-mark" />MEEMIMYLLY</div>
+          <input className="input" placeholder="Hae meemipohjaa..." aria-label="Hae meemipohjaa" />
+          <nav className="links"><a href="#suositut">Suositut</a><a href="#uusimmat">Uusimmat</a><a href="#editori">Luo meemi</a></nav>
+        </div>
+      </header>
+
+      <section className="hero container">
+        <h1>Tee meemi sekunneissa</h1>
+        <p>Valitse pohja tai lataa oma kuva ja lisää teksti.</p>
+        <div className="hero-actions">
+          <button className="btn btn-primary">Aloita meeminteko</button>
+          <button className="btn">Lataa oma kuva</button>
+        </div>
+      </section>
+
+      <section id="editori" className="container editor">
+        <aside className="card left">
+          <p className="section-title">Valitse pohja</p>
+          <input className="input" placeholder="Etsi pohjaa..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
+            {categories.map((cat) => <button key={cat} className={`pill ${cat === category ? 'active' : ''}`} onClick={() => setCategory(cat)}>{cat}</button>)}
+          </div>
+          <div className="template-grid">
+            {filtered.map((t) => (
+              <button key={t.id} className="template-card" onClick={() => setSelectedTemplate(t)} aria-label={`Valitse ${t.title}`}>
+                {t.trending ? <span className="trending">Trending</span> : null}
+                <img src={t.image} alt={t.title} />
+                <span>{t.title}</span>
+              </button>
+            ))}
+          </div>
+          <button className="btn" style={{ marginTop: 12, width: '100%' }}>Lataa oma kuva</button>
+          <div className="ad" style={{ height: 250, marginTop: 12 }}>Google AdSense 300x250</div>
+        </aside>
+
+        <section className="card center">
+          <div className="canvas-toolbar">
+            {['↶', '↷', '－', '＋', '⟲', 'T', '😊'].map((i) => <button key={i} className="icon-btn" aria-label={`Työkalu ${i}`}>{i}</button>)}
+          </div>
+          <div className="canvas-wrap">
+            <div className="canvas">
+              <img src={selectedTemplate.image} alt={selectedTemplate.title} />
+              {layers.map((layer) => (
+                <div
+                  key={layer.id}
+                  className={`layer ${selectedLayer === layer.id ? 'selected' : ''}`}
+                  onMouseDown={(e) => {
+                    const startX = e.clientX;
+                    const startY = e.clientY;
+                    const origX = layer.x;
+                    const origY = layer.y;
+                    setSelectedLayer(layer.id);
+                    const onMove = (ev: MouseEvent) => {
+                      updateLayer(layer.id, { x: Math.min(92, Math.max(8, origX + (ev.clientX - startX) / 4)), y: Math.min(92, Math.max(4, origY + (ev.clientY - startY) / 4)) });
+                    };
+                    const onUp = () => {
+                      window.removeEventListener('mousemove', onMove);
+                      window.removeEventListener('mouseup', onUp);
+                    };
+                    window.addEventListener('mousemove', onMove);
+                    window.addEventListener('mouseup', onUp);
+                  }}
+                  onClick={() => setSelectedLayer(layer.id)}
+                  style={{
+                    top: `${layer.y}%`,
+                    left: `${layer.x}%`,
+                    color: textColor,
+                    fontFamily,
+                    fontSize: `${fontSize}px`,
+                    textShadow: `-${strokeSize}px -${strokeSize}px 0 ${strokeColor}, ${strokeSize}px -${strokeSize}px 0 ${strokeColor}, -${strokeSize}px ${strokeSize}px 0 ${strokeColor}, ${strokeSize}px ${strokeSize}px 0 ${strokeColor}`,
+                    fontWeight: bold ? 800 : 500,
+                    textAlign: align,
+                  }}
+                >
+                  {caps ? layer.text.toUpperCase() : layer.text}
+                </div>
+              ))}
+            </div>
+          </div>
+          <p className="helper">Vinkki: Vedä tekstiä suoraan kuvan päällä</p>
+          <div className="mobile-sticky"><button className="btn btn-primary" style={{ width: '100%' }}>Lataa meemi</button></div>
+        </section>
+
+        <aside className="right">
+          <section className="card ctrl-section">
+            <h3>Tekstit</h3>
+            {layers.slice(0, 2).map((l, i) => (
+              <label key={l.id} style={{ display: 'block', marginBottom: 8 }}>Teksti {i + 1}<input className="input" value={l.text} onChange={(e) => updateLayer(l.id, { text: e.target.value })} /></label>
+            ))}
+            <button className="btn" onClick={() => setLayers((p) => [...p, { id: String(Date.now()), text: 'UUSI TEKSTI', x: 50, y: 50 }])}>+ Lisää tekstikenttä</button>
+          </section>
+
+          <section className="card ctrl-section">
+            <h3>Tyyli</h3>
+            <label>Fontti<select className="input" value={fontFamily} onChange={(e) => setFontFamily(e.target.value)}><option>Impact</option><option>Anton</option><option>Arial Black</option></select></label>
+            <label>Fonttikoko<input type="range" min="24" max="72" value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} /></label>
+            <div className="grid2">
+              <label>Tekstin väri<input type="color" className="input" value={textColor} onChange={(e) => setTextColor(e.target.value)} /></label>
+              <label>Reunan väri<input type="color" className="input" value={strokeColor} onChange={(e) => setStrokeColor(e.target.value)} /></label>
+            </div>
+            <label>Reunan paksuus<input type="range" min="0" max="6" value={strokeSize} onChange={(e) => setStrokeSize(Number(e.target.value))} /></label>
+            <div className="grid2">
+              <button className="btn" onClick={() => setBold((v) => !v)}>Bold</button>
+              <button className="btn" onClick={() => setCaps((v) => !v)}>CAPS</button>
+              <button className="btn" onClick={() => setAlign('center')}>Center</button>
+            </div>
+          </section>
+
+          <section className="card ctrl-section">
+            <h3>Sijoittelu</h3>
+            <div className="grid2">{(['Ylös', 'Keskelle', 'Alas', 'Vapaa'] as const).map((p) => <button key={p} className="btn" onClick={() => placeLayer(p)}>{p}</button>)}</div>
+          </section>
+
+          <section className="card ctrl-section actions">
+            <h3>Toiminnot</h3>
+            <button className="btn btn-primary" onClick={() => showToast('Meemin lataus tulossa pian MVP:n seuraavassa versiossa')}>Lataa meemi</button>
+            <button className="btn" onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Linkki kopioitu leikepöydälle'); }}>Kopioi linkki</button>
+            <button className="btn" onClick={() => showToast('Jakaminen lisätään seuraavaksi')}>Jaa</button>
+            <button className="btn" onClick={() => showToast('Luonnos tallennettu paikallisesti')}>Tallenna luonnos</button>
+          </section>
+
+          <section className="card ctrl-section">
+            <h3>AI-apuri</h3>
+            <p style={{ color: 'var(--muted)', marginTop: 0 }}>Generoi hauska meemiteksti yhdellä klikkauksella.</p>
+            <button className="btn" onClick={() => {
+              setLayers((prev) => prev.map((l, i) => ({ ...l, text: i === 0 ? 'MINÄ MAANANTAINA 08:59' : 'KUN PALAVERI ALKAAKIN 09:30' })));
+              showToast('AI-ehdotus lisätty');
+            }}>Generoi ehdotus</button>
+          </section>
+        </aside>
+      </section>
+
+      <section id="suositut" className="container gallery">
+        <h2>🔥 Suosituimmat meemipohjat</h2>
+        <div className="gallery-grid">
+          {templates.slice(0, 8).map((m) => (
+            <article className="card meme-card" key={`popular-${m.id}`}>
+              <img src={m.image} alt={m.title} />
+              <div className="body"><strong>{m.title}</strong><div style={{ display: 'flex', gap: 8, marginTop: 10 }}><button className="btn">Käytä pohjaa</button><button className="btn">Remix</button></div></div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="uusimmat" className="container gallery">
+        <h2>🆕 Uusimmat meemit</h2>
+        <div className="gallery-grid">
+          {latest.slice(0, 8).map((m) => (
+            <article className="card meme-card" key={m.id}>
+              <img src={m.image} alt={m.title} />
+              <div className="body">
+                <strong>{m.title}</strong>
+                <div className="meta">👀 {m.views} • ❤️ {m.likes} • {m.age}</div>
+                <div style={{ display: 'flex', gap: 8 }}><button className="btn">Avaa</button><button className="btn">Jaa</button></div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container" style={{ marginTop: 24 }}>
+        <div className="ad" style={{ height: 90 }}>Google AdSense 728x90</div>
+      </section>
+
+      <footer className="footer">
+        <div className="container foot-row">
+          <div><strong>MEEMIMYLLY</strong><div>Suomen suosituin meemikone.</div></div>
+          <div style={{ display: 'flex', gap: 14 }}><a href="#">Tietoa</a><a href="#">Ohjeet</a><a href="#">Yhteystiedot</a></div>
+        </div>
+      </footer>
+
+      {toast ? <div className="toast">{toast}</div> : null}
+    </main>
   );
 }
