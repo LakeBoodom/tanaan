@@ -1,0 +1,353 @@
+.page {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 0 24px 120px;
+  color: #0f172a;
+}
+
+.section {
+  padding-top: 120px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroSection {
+  padding-top: 72px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 32px;
+  align-items: center;
+}
+
+.heroContent {
+  grid-column: span 7;
+  display: grid;
+  gap: 24px;
+  max-width: 600px;
+}
+
+.heroContent h1 {
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.heroContent p,
+.sectionLead {
+  max-width: 600px;
+  font-size: 1.125rem;
+  color: #334155;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 52px;
+  border-radius: 16px;
+  padding: 14px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.primaryButton {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #0f172a;
+}
+
+.secondaryButton {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.chatCard {
+  grid-column: span 5;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  background: #ffffff;
+  display: grid;
+  gap: 24px;
+}
+
+.chatPrompt {
+  font-weight: 600;
+}
+
+.chatResponse {
+  border-radius: 12px;
+  background: #f8fafc;
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.chatMissing {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 4vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  max-width: 600px;
+}
+
+.statGrid,
+.educationGrid,
+.valueGrid,
+.featureGrid,
+.compareGrid,
+.pricingGrid {
+  display: grid;
+  gap: 24px;
+}
+
+.statGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 24px;
+}
+
+.statCard,
+.textCard,
+.valueCard,
+.featureCard,
+.compareCard,
+.reportCard,
+.formCard,
+.finalCtaCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.statValue,
+.price,
+.reportScore {
+  font-size: clamp(2.75rem, 6vw, 4rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 16px;
+}
+
+.smallLine {
+  color: #475569;
+}
+
+.educationGrid,
+.valueGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.valueCard {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.featureGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 32px;
+}
+
+.featureCard {
+  display: grid;
+  gap: 16px;
+}
+
+.featureCard h3,
+.compareCard h3 {
+  font-size: 1.25rem;
+}
+
+.reportCard {
+  max-width: 760px;
+  margin: 32px auto 0;
+  display: grid;
+  gap: 24px;
+}
+
+.reportLabel,
+.reportStatus,
+.oneTime {
+  font-weight: 600;
+}
+
+.bars {
+  display: grid;
+  gap: 16px;
+}
+
+.barTrack {
+  height: 10px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.barTrack > div {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #06b6d4);
+}
+
+.platformList {
+  margin: 32px 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.compareGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 32px;
+}
+
+.compareCard ul,
+.checklist {
+  margin-top: 16px;
+  padding-left: 20px;
+  display: grid;
+  gap: 12px;
+  color: #334155;
+}
+
+.steps {
+  margin: 24px 0;
+  padding-left: 24px;
+  display: grid;
+  gap: 12px;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.pricingGrid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+}
+
+.pricingGrid > div {
+  grid-column: span 5;
+  display: grid;
+  gap: 24px;
+  max-width: 600px;
+}
+
+.formCard {
+  grid-column: span 7;
+  display: grid;
+  gap: 16px;
+}
+
+.formCard label {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.formCard input,
+.formCard textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 12px;
+  font: inherit;
+}
+
+.faqList {
+  display: grid;
+  gap: 12px;
+  max-width: 860px;
+}
+
+.faqItem {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 24px;
+  background: #ffffff;
+}
+
+.faqItem summary {
+  list-style: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.finalCtaSection {
+  padding-bottom: 40px;
+}
+
+.finalCtaCard {
+  display: grid;
+  gap: 24px;
+  text-align: center;
+  justify-items: center;
+}
+
+@media (max-width: 1000px) {
+  .heroContent,
+  .chatCard,
+  .pricingGrid > div,
+  .formCard {
+    grid-column: 1 / -1;
+  }
+
+  .statGrid,
+  .educationGrid,
+  .valueGrid,
+  .featureGrid,
+  .compareGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 0 16px 96px;
+  }
+
+  .section {
+    padding-top: 96px;
+  }
+
+  .heroSection {
+    padding-top: 40px;
+  }
+
+  .statGrid,
+  .educationGrid,
+  .valueGrid,
+  .featureGrid,
+  .compareGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .buttonRow {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}
